@@ -1,0 +1,29 @@
+.root{
+	-fx-background-image: url("bg.jpg");
+}
+.table-row-cell {
+    -fx-cell-size: 40px;
+}
+.button{
+	-fx-background-color: white;
+	-fx-border-color: black;
+	-fx-border-radius: 5px;
+}
+.button .text {
+    -fx-effect: dropshadow( two-pass-box , gray , .5, 10 , 1 , 1);    
+}
+.button:hover{
+	-fx-background-color: lightgray;
+	-fx-transition: 0.4s;
+}
+.text-field {
+    -fx-prompt-text-fill: black;
+}
+
+.text-field .text {
+    -fx-effect: dropshadow( two-pass-box , gray , .5, 10 , 1 , 1);    
+}
+
+.text-field:empty .text {
+    -fx-effect: null ;
+}
