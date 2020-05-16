@@ -8,28 +8,28 @@ CREATE TABLE czytelnicy (
         CONSTRAINT pesel_length CHECK(PESEL > 10000000000 AND PESEL < 99999999999),
     data_urodzenia DATE
 );
+INSERT INTO czytelnicy (id_czytelnika,imie,nazwisko,PESEL,data_urodzenia) VALUES (
+   0001, 'Dawid', 'Kowalski', 94121030712, '10-DEC-94');
 INSERT INTO czytelnicy VALUES (
-   '0001', 'Dawid', 'Kowalski', 94121030712, '10.12.1994');
+   '0002', 'Kamil', 'Mak', '293052530712', to_date(value1,'25.05.1993'));
 INSERT INTO czytelnicy VALUES (
-   '0002', 'Kamil', 'Mak', 293052530712, '25.05.1993');
+   '0003', 'Agata', 'Kowalska', 84101030712, '84-10-10');
 INSERT INTO czytelnicy VALUES (
-   '0003', 'Agata', 'Kowalska', 84101030712, '10.10.1984');
+   '0004', 'Julka', 'Jonarska', 79101030712, '79-10-10');
 INSERT INTO czytelnicy VALUES (
-   '0004', 'Julka', 'Jonarska', 79101030712, '10.10.1979');
+   '0005', 'Maja', 'Marek', 88031330712, '88-03-13');
 INSERT INTO czytelnicy VALUES (
-   '0005', 'Maja', 'Marek', 88031330712, '13.03.1988');
+   '0006', 'Dawid', 'Nowak', 99120930712, '99-12-09');
 INSERT INTO czytelnicy VALUES (
-   '0006', 'Dawid', 'Nowak', 99120930712, '09.12.1999');
+   '0007', 'Marek', 'Kowalski', 92111030712, '92-11-10');
 INSERT INTO czytelnicy VALUES (
-   '0007', 'Marek', 'Kowalski', 02111030712, '10.11.2002');
+   '0008', 'Magdalena', 'Nowak', 97060330712, '97-06-03');
 INSERT INTO czytelnicy VALUES (
-   '0008', 'Magdalena', 'Nowak', 97060330712, '03.06.1997');
+   '0009', 'Agata', 'Janiga', 98101530712, '98-10-15');
 INSERT INTO czytelnicy VALUES (
-   '0009', 'Agata', 'Janiga', 98101530712, '15.10.1998');
+   '0010', 'Bartosz', 'Trybinski', 85120630712, '85-12-06');
 INSERT INTO czytelnicy VALUES (
-   '0010', 'Bartosz', 'Trybinski', 85120630712, '06.12.1985');
-INSERT INTO czytelnicy VALUES (
-   '0011', 'Dawid', 'Marek', 94021030712, '10.02.1994');
+   '0011', 'Dawid', 'Marek', 94021030712, '94-02-10');
 
 
 CREATE TABLE autorzy(

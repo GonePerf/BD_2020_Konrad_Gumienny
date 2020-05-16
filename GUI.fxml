@@ -41,7 +41,7 @@
                   <Font size="17.0" />
                </font>
             </TextField>
-            <Button mnemonicParsing="false" prefHeight="33.0" prefWidth="300.0" text="Wypożycz" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <Button disable="true" mnemonicParsing="false" prefHeight="33.0" prefWidth="300.0" text="Wypożycz" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -82,7 +82,7 @@
                   <Font size="17.0" />
                </font>
             </TextField>
-            <Button mnemonicParsing="false" prefHeight="33.0" prefWidth="300.0" text="Zwróć" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <Button disable="true" mnemonicParsing="false" prefHeight="33.0" prefWidth="300.0" text="Zwróć" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -104,6 +104,8 @@
                   <Font size="17.0" />
                </font>
             </Label>
+            <Label alignment="CENTER" prefHeight="33.0" prefWidth="191.0" text="IMIE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <Label alignment="CENTER" layoutX="134.0" layoutY="106.0" prefHeight="33.0" prefWidth="191.0" text="NAZWISKO" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
          </children>
       </GridPane>
    </children>
