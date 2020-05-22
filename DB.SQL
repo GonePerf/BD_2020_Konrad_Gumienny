@@ -63,16 +63,18 @@ INSERT INTO autorzy VALUES (
    0012, 'Erich', 'Gamma');
 
 CREATE TABLE pracownicy(
-    id_pracownika INT PRIMARY KEY,
+    id_pracownika INT
+    CONSTRAINT id_pracownika_pk PRIMARY KEY,
     imie VARCHAR2(15) NOT NULL,
     nazwisko VARCHAR2(25) NOT NULL,
-    PESEL INT(11) NOT NULL UNIQUE,
-);   
+    PESEL INT NOT NULL UNIQUE
+    CONSTRAINT pesel_length_ CHECK(PESEL > 10000000000 AND PESEL < 99999999999)
+);
 
 INSERT INTO pracownicy VALUES (
    '0001', 'Jan', 'Brączyk', 92021030712);
 INSERT INTO pracownicy VALUES (
-   '0002', 'Dominik', 'Mastej', 91061030712);
+   '0002', 'Dominika', 'Mastej', 91061030712);
 INSERT INTO pracownicy VALUES (
    '0003', 'Krzysztof', 'Bożek', 87121030712);
 INSERT INTO pracownicy VALUES (
@@ -111,17 +113,19 @@ INSERT INTO ksiazki VALUES (
    ksiazki_seq.nextval, 'Potop', 2004, 1, 8); 
 
 CREATE TABLE wypozyczenia(
-	id_wypozyczenia INT PRIMARY KEY,
-	id_czytelnika INT CONSTRAINT FK_czytelnik_wypozyczenie REFERENCES czytelnicy(id_czytelnika,
-	id_ksiazki INT CONSTRAINT FK_ksiazka_wypozyczenie REFERENCES ksiazki(id_ksiazka),
+	id_wypozyczenia INT
+		CONSTRAINT id_wypozyczenia_pk PRIMARY KEY,
+	id_czytelnika INT CONSTRAINT id_czyt_wyp_fk REFERENCES czytelnicy(id_czytelnika,
+	id_ksiazki INT CONSTRAINT id_ksiazka_wyp_fk REFERENCES ksiazki(id_ksiazka),
 	data_wypozyczenia DATE,
-	id_pracownika INT CONSTRAINT FK_pracownik_wypozyczenie REFERENCES pracownicy(id_pracownika),
+	id_pracownika INT CONSTRAINT id_prac_wyp_fk REFERENCES pracownicy(id_pracownika),
 	data_oddania DATE
 );
 
 CREATE TABLE zwroty(
-	id_zwrotu INT PRIMARY KEY,
-	id_wypozyczenia INT CONSTRAINT FK_czytelnik_zwrot REFERENCES czytelnicy(id_czytelnika,
-	id_pracownika INT CONSTRAINT FK_pracownik_zwrot REFERENCES pracownicy(id_pracownika),
+	id_zwrotu INT 
+		CONSTRAINT id_zwrotu_pk PRIMARY KEY,
+	id_wypozyczenia INT CONSTRAINT id_czyt_zwrot_fk REFERENCES czytelnicy(id_czytelnika,
+	id_pracownika INT CONSTRAINT id_prac_zwrot_fk REFERENCES pracownicy(id_pracownika),
 	data_zwrotu DATE
 );

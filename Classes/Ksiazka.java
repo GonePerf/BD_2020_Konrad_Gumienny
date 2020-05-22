@@ -1,14 +1,17 @@
+package Classes;
+
 public class Ksiazka{
 	private int id_ksiazki;
     private String tytul;
     private int rok_wydania;
     private boolean dostepnosc;
-    private int id_autora;
+    private String autor;
 
-    public Ksiazka(String tytul, int rok_wydania, int id_autora) {
+    public Ksiazka(int id_ksiazki, String tytul, int rok_wydania, String autor) {
+        this.id_ksiazki = id_ksiazki;
         this.tytul = tytul;
         this.rok_wydania = rok_wydania;
-        this.id_autora = id_autora;
+        this.autor = autor;
         this.dostepnosc = true;
     }
 
@@ -36,12 +39,12 @@ public class Ksiazka{
         this.dostepnosc = dostepnosc;
     }
 
-    public int getId_autora() {
-        return id_autora;
+    public String getAutor() {
+        return autor;
     }
 
-    public void setId_autora(int id_autora) {
-        this.id_autora = id_autora;
+    public void setAutor(String id_autora) {
+        this.autor = id_autora;
     }
 
     public int getId_ksiazki() {
@@ -54,5 +57,16 @@ public class Ksiazka{
 
     public void zwroc(){
         this.dostepnosc = true;
+    }
+
+    @Override
+    public String toString() {
+        return "Ksiazka{" +
+                "id_ksiazki=" + id_ksiazki +
+                ", tytul='" + tytul + '\'' +
+                ", rok_wydania=" + rok_wydania +
+                ", dostepnosc=" + dostepnosc +
+                ", autor=" + autor +
+                '}';
     }
 }
