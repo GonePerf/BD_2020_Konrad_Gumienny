@@ -120,9 +120,9 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="dodajKsiazke" mnemonicParsing="false" prefHeight="35.0" prefWidth="280.0" text="Nowa Książka" GridPane.rowIndex="1" />
-            <Button fx:id="dodajCzytelnika" mnemonicParsing="false" prefHeight="35.0" prefWidth="280.0" text="Nowy Czytelnik" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Button fx:id="dodajAutora" mnemonicParsing="false" prefHeight="35.0" prefWidth="280.0" text="Nowy Autor" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Button mnemonicParsing="false" onAction="#dodajKsiazke" prefHeight="35.0" prefWidth="280.0" text="Nowa Książka" GridPane.rowIndex="1" />
+            <Button mnemonicParsing="false" onAction="#dodajCzytelnika" prefHeight="35.0" prefWidth="280.0" text="Nowy Czytelnik" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Button mnemonicParsing="false" onAction="#dodajAutora" prefHeight="35.0" prefWidth="280.0" text="Nowy Autor" GridPane.columnIndex="2" GridPane.rowIndex="1" />
          </children>
       </GridPane>
    </children>

@@ -4,15 +4,18 @@ import Classes.Ksiazka;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Controller {
     Connection connection;
@@ -59,6 +62,7 @@ public class Controller {
     }
 
     public void listCreate() throws SQLException {
+        listaDostepnychKsiazek.clear();
         ResultSet resultSet = statement.executeQuery(
                 "select id_ksiazki, tytul, rok_wydania, dostepnosc, autorzy.imie, autorzy.nazwisko " +
                         "from ksiazki, autorzy " +
@@ -127,7 +131,16 @@ public class Controller {
     }
 
     @FXML
-    public void dodajKsiazke(){}
+    public void dodajKsiazke() throws IOException, SQLException {
+        Parent root = FXMLLoader.load(getClass().getResource("dodajKsiazke.fxml"));
+        Stage newWindow = new Stage();
+        newWindow.setTitle("Dodawanie książki");
+        newWindow.setScene(new Scene(root));
+        newWindow.setAlwaysOnTop(true);
+        newWindow.show();
+        if(!newWindow.isShowing()) listCreate();
+
+    }
     @FXML
     public void dodajCzytelnika(){}
     @FXML
