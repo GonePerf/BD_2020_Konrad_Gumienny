@@ -1,3 +1,7 @@
+set feedback off
+prompt Tworzenie tabel i wprowadzanie danych.  Prosze czekac.
+
+DROP TABLE czytelnicy CASCADE CONSTRAINTS;
 CREATE TABLE czytelnicy (
     id_czytelnika VARCHAR2(4)
     	CONSTRAINT id_czytelnika_pk PRIMARY KEY
@@ -29,10 +33,16 @@ INSERT INTO czytelnicy VALUES (
 INSERT INTO czytelnicy VALUES (
    0010, 'Bartosz', 'Trybinski', 85120630712, '06-DEC-1985');
 
+
+
 CREATE SEQUENCE czytelnicy_seq
 START WITH 11
 INCREMENT BY 1;
 
+COMMIT;
+
+
+DROP TABLE autorzy CASCADE CONSTRAINTS;
 CREATE TABLE autorzy(
     id_autora INT 
       CONSTRAINT id_autora_pk PRIMARY KEY
@@ -70,6 +80,9 @@ CREATE SEQUENCE autorzy_seq
 START WITH 14
 INCREMENT BY 1;
 
+COMMIT;
+
+DROP TABLE pracownicy CASCADE CONSTRAINTS;
 CREATE TABLE pracownicy(
     id_pracownika INT
     CONSTRAINT id_pracownika_pk PRIMARY KEY,
@@ -90,10 +103,9 @@ INSERT INTO pracownicy VALUES (
 INSERT INTO pracownicy VALUES (
    '0005', 'Krzysztof', 'Buba', 97051030712);
 
-CREATE SEQUENCE ksiazki_seq
-START WITH 1
-INCREMENT BY 1;
+COMMIT;
 
+DROP TABLE ksiazki CASCADE CONSTRAINTS;
 CREATE TABLE ksiazki(
 	id_ksiazki INT
       CONSTRAINT id_ksiazki_pk PRIMARY KEY
@@ -106,6 +118,9 @@ CREATE TABLE ksiazki(
 );
 
 
+CREATE SEQUENCE ksiazki_seq
+START WITH 1
+INCREMENT BY 1;
 
 INSERT INTO ksiazki VALUES (
    ksiazki_seq.nextval, 'Wzorce Projektowe', 2019, 1, 12); 
@@ -122,6 +137,14 @@ INSERT INTO ksiazki VALUES (
 INSERT INTO ksiazki VALUES (
    ksiazki_seq.nextval, 'Metody sztucznej inteligencji', 2017, 1, 13);
 
+COMMIT;
+
+CREATE SEQUENCE wypozyczenia_seq
+START WITH 1
+INCREMENT BY 1;
+
+
+DROP TABLE wypozyczenia CASCADE CONSTRAINTS;
 CREATE TABLE wypozyczenia(
 	id_wypozyczenia INT
 		CONSTRAINT id_wypozyczenia_pk PRIMARY KEY
@@ -132,6 +155,12 @@ CREATE TABLE wypozyczenia(
 	id_pracownika INT CONSTRAINT id_prac_wyp_fk REFERENCES pracownicy(id_pracownika)
 );
 
+INSERT INTO wypozyczenia VALUES (
+	wypozyczenia_seq.nextval, 0002, 3, '01-APR-2020', 0002
+);
+
+COMMIT;
+
 CREATE TABLE zwroty(
 	id_zwrotu INT 
 		CONSTRAINT id_zwrotu_pk PRIMARY KEY,
@@ -139,3 +168,6 @@ CREATE TABLE zwroty(
 	id_pracownika INT CONSTRAINT id_prac_zwrot_fk REFERENCES pracownicy(id_pracownika),
 	data_zwrotu DATE
 );
+
+prompt Tables and sequences created and populated.
+set feedback on

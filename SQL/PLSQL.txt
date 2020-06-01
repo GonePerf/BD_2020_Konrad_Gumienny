@@ -1,0 +1,10 @@
+CREATE OR REPLACE FUNCTION SUM_DAYS
+(data_wypozyczenia IN DATE,data_zwrotu IN DATE, wynik OUT number)
+RETURN NUMBER
+IS
+	sumaDNI NUMBER(7) := 0;
+BEGIN
+  SELECT DATEDIFF(day,data_wypozyczenia,data_zwrotu) AS sumaDNI;
+	
+	RETURN sumaDNI;
+END;

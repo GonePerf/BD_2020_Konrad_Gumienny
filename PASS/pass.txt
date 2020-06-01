@@ -1,0 +1,18 @@
+Serwer oracle:
+
+login: "sys as sysdba"
+hasło: "Oradoc_db1"
+
+lub
+login: "dummy"
+hasło: "dummy" 
+(Konto które utworzyłem, ale z niego nie korzystam, ma prawa administratora)
+
+Logowanie do programu odbywa się za pomocą imienia i nr pesel pracownika (hasło)!!
+Przykładowe konta:
+
+imie: Jan
+hasło: 92021030712
+
+imie: Dominika
+hasło: 91061030712
