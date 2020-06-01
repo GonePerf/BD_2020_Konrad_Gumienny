@@ -29,7 +29,9 @@ INSERT INTO czytelnicy VALUES (
 INSERT INTO czytelnicy VALUES (
    0010, 'Bartosz', 'Trybinski', 85120630712, '06-DEC-1985');
 
-
+CREATE SEQUENCE czytelnicy_seq
+START WITH 11
+INCREMENT BY 1;
 
 CREATE TABLE autorzy(
     id_autora INT 
@@ -61,6 +63,12 @@ INSERT INTO autorzy VALUES (
    0010, 'Ernest', 'Hemingway');
 INSERT INTO autorzy VALUES (
    0012, 'Erich', 'Gamma');
+INSERT INTO autorzy VALUES (
+   0013, 'Marek', 'Kurzyński');
+
+CREATE SEQUENCE autorzy_seq
+START WITH 14
+INCREMENT BY 1;
 
 CREATE TABLE pracownicy(
     id_pracownika INT
@@ -110,16 +118,18 @@ INSERT INTO ksiazki VALUES (
 INSERT INTO ksiazki VALUES (
    ksiazki_seq.nextval, 'Dziady cz. I', 2002, 1, 2); 
 INSERT INTO ksiazki VALUES (
-   ksiazki_seq.nextval, 'Potop', 2004, 1, 8); 
+   ksiazki_seq.nextval, 'Potop', 2004, 1, 8);
+INSERT INTO ksiazki VALUES (
+   ksiazki_seq.nextval, 'Metody sztucznej inteligencji', 2017, 1, 13);
 
 CREATE TABLE wypozyczenia(
 	id_wypozyczenia INT
-		CONSTRAINT id_wypozyczenia_pk PRIMARY KEY,
-	id_czytelnika INT CONSTRAINT id_czyt_wyp_fk REFERENCES czytelnicy(id_czytelnika,
-	id_ksiazki INT CONSTRAINT id_ksiazka_wyp_fk REFERENCES ksiazki(id_ksiazka),
+		CONSTRAINT id_wypozyczenia_pk PRIMARY KEY
+		CONSTRAINT id_wypozyczenia_nn NOT NULL,
+	id_czytelnika VARCHAR2(4) CONSTRAINT id_czyt_wyp_fk REFERENCES czytelnicy(id_czytelnika),
+	id_ksiazki INT CONSTRAINT id_ksiazka_wyp_fk REFERENCES ksiazki(id_ksiazki),
 	data_wypozyczenia DATE,
-	id_pracownika INT CONSTRAINT id_prac_wyp_fk REFERENCES pracownicy(id_pracownika),
-	data_oddania DATE
+	id_pracownika INT CONSTRAINT id_prac_wyp_fk REFERENCES pracownicy(id_pracownika)
 );
 
 CREATE TABLE zwroty(

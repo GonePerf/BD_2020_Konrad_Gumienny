@@ -1,3 +1,5 @@
+package Classes;
+
 public class Pracownik{
 	private int id_pracownika;
     private String imie;

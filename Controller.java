@@ -142,13 +142,32 @@ public class Controller {
 
     }
     @FXML
-    public void dodajCzytelnika(){}
+    public void dodajCzytelnika() throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("dodajCzytelnika.fxml"));
+        Stage newWindow = new Stage();
+        newWindow.setTitle("Dodawanie czytelnika");
+        newWindow.setScene(new Scene(root));
+        newWindow.setAlwaysOnTop(true);
+        newWindow.show();
+    }
     @FXML
-    public void dodajAutora(){}
-//    @FXML
-//    public void activeBtnWypozycz(){
-//        btn_wypozycz.setDisable(false);
-//    }
+    public void dodajAutora() throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("dodajAutora.fxml"));
+        Stage newWindow = new Stage();
+        newWindow.setTitle("Dodawanie autora");
+        newWindow.setScene(new Scene(root));
+        newWindow.setAlwaysOnTop(true);
+        newWindow.show();
+    }
+    @FXML
+    public void infoBtn() throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("info.fxml"));
+        Stage newWindow = new Stage();
+        newWindow.setTitle("INFO");
+        newWindow.setScene(new Scene(root));
+        newWindow.setAlwaysOnTop(true);
+        newWindow.show();
+    }
 //    @FXML
 //    public void activeBtnZwroc(){
 //        btn_zwroc.setDisable(false);

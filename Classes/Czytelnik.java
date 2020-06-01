@@ -1,3 +1,5 @@
+package Classes;
+
 public class Czytelnik{
     private int id_czytelnika;
     private String imie;

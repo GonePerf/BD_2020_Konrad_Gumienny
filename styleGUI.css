@@ -8,6 +8,8 @@
 	-fx-background-color: white;
 	-fx-border-color: black;
 	-fx-border-radius: 5px;
+	-fx-cursor: pointer;
+
 }
 .button .text {
     -fx-effect: dropshadow( two-pass-box , gray , .5, 10 , 1 , 1);    
@@ -26,4 +28,7 @@
 
 .text-field:empty .text {
     -fx-effect: null ;
+}
+.GridPane .button {
+    -fx-background-color: white;
 }

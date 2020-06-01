@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="495.0" prefWidth="858.0" stylesheets="@styleGUI.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Info">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="267.0" minHeight="10.0" prefHeight="267.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="226.0" minHeight="10.0" prefHeight="197.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <GridPane prefHeight="285.0" prefWidth="858.0" GridPane.rowIndex="1">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="73.0" minHeight="10.0" prefHeight="72.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="163.0" minHeight="10.0" prefHeight="154.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="wyswietlWszystkie" mnemonicParsing="false" onAction="#listCreate" prefHeight="28.0" prefWidth="200.0" text="Wszystkie" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
+            <Button mnemonicParsing="false" onAction="#listaZwróconych" prefHeight="28.0" prefWidth="200.0" text="Oddane" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
+            <Button mnemonicParsing="false" onAction="#listaNieZwróconych" prefHeight="28.0" prefWidth="200.0" text="Wypożyczone" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
+         </children>
+      </GridPane>
+      <TableView fx:id="tabela" opacity="0.9" prefHeight="200.0" prefWidth="200.0">
+        <columns>
+          <TableColumn fx:id="tytul" prefWidth="298.0" text="Tytuł książki" />
+          <TableColumn fx:id="imie_i_nazwisko" prefWidth="228.0" text="Imie i nazwisko" />
+            <TableColumn fx:id="data_wyp" prefWidth="167.0" text="Data wypożyczenia" />
+            <TableColumn fx:id="data_zwr" minWidth="0.0" prefWidth="164.0" text="Data zwrotu" />
+        </columns>
+      </TableView>
+   </children>
+</GridPane>

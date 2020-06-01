@@ -1,9 +1,12 @@
+package Classes;
+
 public class Autor{
 	private int id_autora;
     private String imie;
     private String nazwisko;
 
-    public Autor(String imie, String nazwisko) {
+    public Autor(int id_autora, String imie, String nazwisko) {
+        this.id_autora = id_autora;
         this.imie = imie;
         this.nazwisko = nazwisko;
     }
@@ -28,4 +31,8 @@ public class Autor{
         return id_autora;
     }
 
+    @Override
+    public String toString() {
+        return getImie()+" "+getNazwisko();
+    }
 }
