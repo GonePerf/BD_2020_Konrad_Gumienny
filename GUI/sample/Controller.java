@@ -1,16 +1,14 @@
 package sample;
 
 import Classes.Ksiazka;
+import Classes.Wypozyczenie;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -20,19 +18,34 @@ import java.sql.*;
 public class Controller {
     Connection connection;
     Statement statement;
+    private static String imiePracownika;
+    private static String nazwiskoPracownika;
+    private static int id_pracownika;
     private ObservableList<Ksiazka> listaDostepnychKsiazek = FXCollections.observableArrayList();
-    private ObservableList<Ksiazka> listaNiedostepnychKsiazek = FXCollections.observableArrayList();
+    private ObservableList<Wypozyczenie> listaNiedostepnychKsiazek = FXCollections.observableArrayList();
+
+    static void setPracownik(String imie, String nazwisko, int id_pracownik){
+        imiePracownika = imie;
+        nazwiskoPracownika = nazwisko;
+        id_pracownika = id_pracownik;
+    }
 
     @FXML
     TableView<Ksiazka> tbl_view_dostepne;
     @FXML
-    TableView<Ksiazka> tbl_view_niedostepne;
+    TableView<Wypozyczenie> tbl_view_niedostepne;
     @FXML
     TableColumn<Ksiazka, String> dostepne_tytul;
     @FXML
     TableColumn<Ksiazka, String> dostepne_autor;
     @FXML
     TableColumn<Ksiazka, Integer> dostepne_rok_wydania;
+    @FXML
+    TableColumn<Wypozyczenie,String> niedostepne_tytul;
+    @FXML
+    TableColumn<Wypozyczenie,String> niedostepne_autor;
+    @FXML
+    TableColumn<Wypozyczenie,Integer> niedostepne_wypozyczajacy;
     @FXML
     TextField szukaj_dostepne;
     @FXML
@@ -41,14 +54,23 @@ public class Controller {
     Button btn_wypozycz;
     @FXML
     Button btn_zwroc;
+    @FXML
+    Label labelImie;
+    @FXML
+    Label labelNazwisko;
 
     @FXML
     public void initialize() {
         try{
+            labelImie.setText(imiePracownika);
+            labelNazwisko.setText(nazwiskoPracownika);
             Class.forName("oracle.jdbc.driver.OracleDriver");
             dostepne_tytul.setCellValueFactory(new PropertyValueFactory<>("tytul"));
             dostepne_autor.setCellValueFactory(new PropertyValueFactory<>("autor"));
             dostepne_rok_wydania.setCellValueFactory(new PropertyValueFactory<>("rok_wydania"));
+            niedostepne_tytul.setCellValueFactory(new PropertyValueFactory<>("tytul_ksiazki"));
+            niedostepne_autor.setCellValueFactory(new PropertyValueFactory<>("data_wypozyczenia"));
+            niedostepne_wypozyczajacy.setCellValueFactory(new PropertyValueFactory<>("imie_i_nazwisko_czytelnika"));
             //DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:SID","username","password");
             connection =
                     DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:ORCLCDB","sys as sysdba","Oradoc_db1");
@@ -77,15 +99,25 @@ public class Controller {
         tbl_view_dostepne.setItems(listaDostepnychKsiazek);
 
         resultSet = statement.executeQuery(
-                "select id_ksiazki, tytul, rok_wydania, dostepnosc, autorzy.imie, autorzy.nazwisko " +
-                        "from ksiazki, autorzy " +
-                        "where ksiazki.dostepnosc = 0 and ksiazki.id_autora = autorzy.id_autora");
+                "select id_wypozyczenia, ksiazki.tytul, czytelnicy.imie, czytelnicy.nazwisko, data_wypozyczenia " +
+                        "from wypozyczenia "+
+                        "inner join ksiazki on wypozyczenia.id_ksiazki = ksiazki.id_ksiazki " +
+                        "inner join czytelnicy on wypozyczenia.id_czytelnika = czytelnicy.id_czytelnika");
         while(resultSet.next()){
 
+            Wypozyczenie wypozyczenie;
+            String tytul_ksiazki = resultSet.getString(2);
+            String imieNazwisko = resultSet.getString(3) + " " + resultSet.getString(4);
+            String data_wypozyczenia = resultSet.getString(5).substring(0,10);
+            String data_zwrotu = "-";
+//            ResultSet resultSet2 = statement.executeQuery("select data_zwrotu from zwroty where id_wypozyczenia = "+resultSet.getInt(1));
+//            while (resultSet2.next()) data_zwrotu = resultSet2.getDate(0).toString();
 
-            Ksiazka ksiazka = new Ksiazka(resultSet.getInt(1),resultSet.getString(2),resultSet.getInt(3),resultSet.getString(5)+" "+resultSet.getString(6));
-            //System.out.println(ksiazka.toString());
-            listaNiedostepnychKsiazek.add(ksiazka);
+                wypozyczenie = new Wypozyczenie(resultSet.getInt(1), data_wypozyczenia, tytul_ksiazki, imieNazwisko, data_zwrotu);
+
+                //System.out.println(wypozyczenie.toString());
+                listaNiedostepnychKsiazek.add(wypozyczenie);
+
         }
         tbl_view_niedostepne.setItems(listaNiedostepnychKsiazek);
     }
@@ -117,15 +149,26 @@ public class Controller {
         listaNiedostepnychKsiazek.clear();
 
         ResultSet resultSet = statement.executeQuery(
-                "select id_ksiazki, tytul, rok_wydania, dostepnosc, autorzy.imie, autorzy.nazwisko " +
-                        "from ksiazki, autorzy " +
-                        "where ksiazki.tytul like '"+szukaj_niedostepne.getText()+"%' and ksiazki.dostepnosc = 0 and ksiazki.id_autora = autorzy.id_autora");
+                "select id_wypozyczenia, ksiazki.tytul, czytelnicy.imie, czytelnicy.nazwisko, data_wypozyczenia " +
+                        "from wypozyczenia "+
+                        "inner join ksiazki on wypozyczenia.id_ksiazki = ksiazki.id_ksiazki " +
+                        "inner join czytelnicy on wypozyczenia.id_czytelnika = czytelnicy.id_czytelnika "+
+                        "where ksiazki.tytul like '" + szukaj_niedostepne.getText()+"%'");
         while(resultSet.next()){
 
+            Wypozyczenie wypozyczenie;
+            String tytul_ksiazki = resultSet.getString(2);
+            String imieNazwisko = resultSet.getString(3) + " " + resultSet.getString(4);
+            String data_wypozyczenia = resultSet.getString(5).substring(0,10);
+            String data_zwrotu = "-";
+//            ResultSet resultSet2 = statement.executeQuery("select data_zwrotu from zwroty where id_wypozyczenia = "+resultSet.getInt(1));
+//            while (resultSet2.next()) data_zwrotu = resultSet2.getDate(0).toString();
 
-            Ksiazka ksiazka = new Ksiazka(resultSet.getInt(1),resultSet.getString(2),resultSet.getInt(3),resultSet.getString(5)+" "+resultSet.getString(6));
-            //System.out.println(ksiazka.toString());
-            listaNiedostepnychKsiazek.add(ksiazka);
+                wypozyczenie = new Wypozyczenie(resultSet.getInt(1), data_wypozyczenia, tytul_ksiazki, imieNazwisko, data_zwrotu);
+
+                //System.out.println(wypozyczenie.toString());
+                listaNiedostepnychKsiazek.add(wypozyczenie);
+
         }
         tbl_view_niedostepne.setItems(listaNiedostepnychKsiazek);
     }
@@ -172,4 +215,12 @@ public class Controller {
 //    public void activeBtnZwroc(){
 //        btn_zwroc.setDisable(false);
 //    }
+    @FXML
+    public void wypozycz(){
+
+    }
+    @FXML
+    public void zwroc(){
+
+    }
 }

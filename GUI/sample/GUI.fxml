@@ -41,7 +41,7 @@
                   <Font size="17.0" />
                </font>
             </TextField>
-            <Button fx:id="btn_wypozycz" mnemonicParsing="false" prefHeight="33.0" prefWidth="300.0" text="Wypożycz" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <Button fx:id="btn_wypozycz" mnemonicParsing="false" onAction="#wypozycz" prefHeight="33.0" prefWidth="300.0" text="Wypożycz" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -60,9 +60,9 @@
       </TableView>
       <TableView fx:id="tbl_view_niedostepne" opacity="0.9" prefHeight="200.0" prefWidth="200.0" style="-fx-selection-bar: red;;" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <columns>
-            <TableColumn editable="false" prefWidth="360.0" sortable="false" text="Tytuł" />
-            <TableColumn editable="false" prefWidth="205.0" sortable="false" text="Autor" />
-            <TableColumn editable="false" prefWidth="258.0" sortable="false" text="Wypożyczający" />
+            <TableColumn fx:id="niedostepne_tytul" editable="false" prefWidth="360.0" sortable="false" text="Tytuł" />
+            <TableColumn fx:id="niedostepne_autor" editable="false" prefWidth="205.0" sortable="false" text="Data wypożyczenia" />
+            <TableColumn fx:id="niedostepne_wypozyczajacy" editable="false" prefWidth="258.0" sortable="false" text="Wypożyczający" />
          </columns>
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -82,7 +82,7 @@
                   <Font size="17.0" />
                </font>
             </TextField>
-            <Button fx:id="btn_zwroc" mnemonicParsing="false" prefHeight="33.0" prefWidth="300.0" text="Zwróć" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <Button fx:id="btn_zwroc" mnemonicParsing="false" onAction="#zwroc" prefHeight="33.0" prefWidth="300.0" text="Zwróć" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -104,8 +104,8 @@
                   <Font size="17.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" prefHeight="33.0" prefWidth="191.0" text="IMIE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-            <Label alignment="CENTER" layoutX="134.0" layoutY="106.0" prefHeight="33.0" prefWidth="191.0" text="NAZWISKO" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <Label fx:id="labelImie" alignment="CENTER" prefHeight="33.0" prefWidth="191.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <Label fx:id="labelNazwisko" alignment="CENTER" layoutX="134.0" layoutY="106.0" prefHeight="33.0" prefWidth="191.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
          </children>
       </GridPane>
       <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">

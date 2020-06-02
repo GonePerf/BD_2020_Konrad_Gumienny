@@ -117,4 +117,19 @@ public class Info {
         }
         tabela.setItems(listaWypozyczen);
     }
+    @FXML
+    public void getInfo() throws SQLException {
+        if(tabela.getSelectionModel().getSelectedIndex() == -1){
+            System.out.println("Nie wybrano");
+        }
+        else{
+
+            CallableStatement cstmt = connection.prepareCall("{?=call sum_days(?)}");
+            cstmt.registerOutParameter(1, Types.DATE);
+            cstmt.setDate("data_wypozyczenia",Date.valueOf(tabela.getSelectionModel().getSelectedItem().getData_wypozyczenia()));
+            cstmt.execute();
+
+            System.out.println("Wynik = "+cstmt.getInt(1));
+        }
+    }
 }

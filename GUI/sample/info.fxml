@@ -32,7 +32,7 @@
             <Button mnemonicParsing="false" onAction="#listaNieZwróconych" prefHeight="28.0" prefWidth="200.0" text="Wypożyczone" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
          </children>
       </GridPane>
-      <TableView fx:id="tabela" opacity="0.9" prefHeight="200.0" prefWidth="200.0">
+      <TableView fx:id="tabela" onMouseClicked="#getInfo" opacity="0.9" prefHeight="200.0" prefWidth="200.0">
         <columns>
           <TableColumn fx:id="tytul" prefWidth="298.0" text="Tytuł książki" />
           <TableColumn fx:id="imie_i_nazwisko" prefWidth="228.0" text="Imie i nazwisko" />
