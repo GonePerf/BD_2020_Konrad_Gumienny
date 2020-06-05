@@ -33,7 +33,7 @@ public class DodajCzytelnika {
     @FXML
     public void dodajCzytelnikaDoBazy() throws SQLException {
 
-        String query = "INSERT INTO czytelnicy VALUES (czytelnicy_seq.nextval, '"+imie.getText()+"', "+nazwisko.getText()+", "+pesel.getText()+", "+data_ur.getEditor().getText()+");";
+        String query = "INSERT INTO czytelnicy VALUES (czytelnicy_seq.nextval, '"+imie.getText()+"', '"+nazwisko.getText()+"', "+pesel.getText();
         statement.executeQuery(query);
         Stage stage = (Stage) button.getScene().getWindow();
         stage.close();

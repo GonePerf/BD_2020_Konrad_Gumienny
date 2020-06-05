@@ -6,13 +6,23 @@ public class Wypozyczenie{
     private String tytul_ksiazki;
     private String imie_i_nazwisko_czytelnika;
     private String data_zwrotu;
+    private int id_ksiazki;
 
-    public Wypozyczenie(int id_wypozyczenia, String data_wypozyczenia, String tytul_ksiazki, String imie_i_nazwisko_czytelnika, String data_zwrotu) {
+    public Wypozyczenie(int id_wypozyczenia, String data_wypozyczenia, String tytul_ksiazki, String imie_i_nazwisko_czytelnika, String data_zwrotu,int id_ksiazki) {
         this.id_wypozyczenia = id_wypozyczenia;
         this.data_wypozyczenia = data_wypozyczenia;
         this.tytul_ksiazki = tytul_ksiazki;
         this.imie_i_nazwisko_czytelnika = imie_i_nazwisko_czytelnika;
         this.data_zwrotu = data_zwrotu;
+        this.id_ksiazki = id_ksiazki;
+    }
+
+    public int getId_ksiazki() {
+        return id_ksiazki;
+    }
+
+    public void setId_ksiazki(int id_ksiazki) {
+        this.id_ksiazki = id_ksiazki;
     }
 
     public int getId_wypozyczenia() {

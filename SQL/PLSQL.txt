@@ -1,10 +1,11 @@
 CREATE OR REPLACE FUNCTION SUM_DAYS
-(data_wypozyczenia DATE,data_zwrotu DATE)
+(data_wypozyczenia IN DATE, data_zwrotu IN DATE)
 RETURN NUMBER
 IS
 	sumaDNI NUMBER(7) := 0;
 BEGIN
-  SELECT DATEDIFF(day,data_wypozyczenia,data_zwrotu) AS sumaDNI;
+  SELECT (data_zwrotu - data_wypozyczenia) INTO sumaDNI 
+  FROM DUAL;
 	
 	RETURN sumaDNI;
 END;
@@ -16,7 +17,20 @@ RETURN NUMBER
 IS
 	sumaDNI NUMBER(7) := 0;
 BEGIN
-  SELECT DATEDIFF(day,data_wypozyczenia,CURRENT_DATE) AS sumaDNI;
+  SELECT (SYSDATE - data_wypozyczenia) INTO sumaDNI 
+  FROM DUAL;
 	
 	RETURN sumaDNI;
 END;
+
+create or replace function datediff( p_what in varchar2,
+ p_d1   in date, p_d2   in date ) return number
+  as
+  l_result    number;
+ begin
+      select (p_d2-p_d1) *
+      decode( upper(p_what),
+     'SS', 24*60*60, 'MI', 24*60, 'HH', 24, NULL )
+    into l_result from dual;
+    return l_result;
+   end;

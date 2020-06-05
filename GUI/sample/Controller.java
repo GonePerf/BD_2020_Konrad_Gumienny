@@ -4,6 +4,7 @@ import Classes.Ksiazka;
 import Classes.Wypozyczenie;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.sql.*;
@@ -99,7 +101,7 @@ public class Controller {
         tbl_view_dostepne.setItems(listaDostepnychKsiazek);
 
         resultSet = statement.executeQuery(
-                "select id_wypozyczenia, ksiazki.tytul, czytelnicy.imie, czytelnicy.nazwisko, data_wypozyczenia " +
+                "select id_wypozyczenia, ksiazki.tytul, czytelnicy.imie, czytelnicy.nazwisko, data_wypozyczenia, ksiazki.id_ksiazki " +
                         "from wypozyczenia "+
                         "inner join ksiazki on wypozyczenia.id_ksiazki = ksiazki.id_ksiazki " +
                         "inner join czytelnicy on wypozyczenia.id_czytelnika = czytelnicy.id_czytelnika");
@@ -113,7 +115,7 @@ public class Controller {
 //            ResultSet resultSet2 = statement.executeQuery("select data_zwrotu from zwroty where id_wypozyczenia = "+resultSet.getInt(1));
 //            while (resultSet2.next()) data_zwrotu = resultSet2.getDate(0).toString();
 
-                wypozyczenie = new Wypozyczenie(resultSet.getInt(1), data_wypozyczenia, tytul_ksiazki, imieNazwisko, data_zwrotu);
+                wypozyczenie = new Wypozyczenie(resultSet.getInt(1), data_wypozyczenia, tytul_ksiazki, imieNazwisko, data_zwrotu, resultSet.getInt(6));
 
                 //System.out.println(wypozyczenie.toString());
                 listaNiedostepnychKsiazek.add(wypozyczenie);
@@ -149,7 +151,7 @@ public class Controller {
         listaNiedostepnychKsiazek.clear();
 
         ResultSet resultSet = statement.executeQuery(
-                "select id_wypozyczenia, ksiazki.tytul, czytelnicy.imie, czytelnicy.nazwisko, data_wypozyczenia " +
+                "select id_wypozyczenia, ksiazki.tytul, czytelnicy.imie, czytelnicy.nazwisko, data_wypozyczenia, ksiazki.id_ksiazki " +
                         "from wypozyczenia "+
                         "inner join ksiazki on wypozyczenia.id_ksiazki = ksiazki.id_ksiazki " +
                         "inner join czytelnicy on wypozyczenia.id_czytelnika = czytelnicy.id_czytelnika "+
@@ -164,7 +166,7 @@ public class Controller {
 //            ResultSet resultSet2 = statement.executeQuery("select data_zwrotu from zwroty where id_wypozyczenia = "+resultSet.getInt(1));
 //            while (resultSet2.next()) data_zwrotu = resultSet2.getDate(0).toString();
 
-                wypozyczenie = new Wypozyczenie(resultSet.getInt(1), data_wypozyczenia, tytul_ksiazki, imieNazwisko, data_zwrotu);
+                wypozyczenie = new Wypozyczenie(resultSet.getInt(1), data_wypozyczenia, tytul_ksiazki, imieNazwisko, data_zwrotu,resultSet.getInt(6));
 
                 //System.out.println(wypozyczenie.toString());
                 listaNiedostepnychKsiazek.add(wypozyczenie);
@@ -216,11 +218,34 @@ public class Controller {
 //        btn_zwroc.setDisable(false);
 //    }
     @FXML
-    public void wypozycz(){
-
+    public void wypozycz() throws IOException {
+        WypozyczKsiazke.setId_ksiazki(tbl_view_dostepne.getSelectionModel().getSelectedItem().getId_ksiazki(),id_pracownika);
+        Parent root = FXMLLoader.load(getClass().getResource("wypozyczKsiazke.fxml"));
+        Stage newWindow = new Stage();
+        newWindow.setTitle("Wypożyczanie");
+        newWindow.setScene(new Scene(root));
+        newWindow.setAlwaysOnTop(true);
+        newWindow.show();
+        newWindow.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                try {
+                    listCreate();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
     @FXML
-    public void zwroc(){
-
+    public void zwroc() throws IOException {
+        ZwrocKsiazke.setId_ksiazki(tbl_view_niedostepne.getSelectionModel().getSelectedItem().getId_ksiazki(),id_pracownika,
+                tbl_view_niedostepne.getSelectionModel().getSelectedItem().getId_wypozyczenia());
+        Parent root = FXMLLoader.load(getClass().getResource("zwrocKsiazke.fxml"));
+        Stage newWindow = new Stage();
+        newWindow.setTitle("Wypożyczanie");
+        newWindow.setScene(new Scene(root));
+        newWindow.setAlwaysOnTop(true);
+        newWindow.show();
     }
 }

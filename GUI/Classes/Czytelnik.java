@@ -8,12 +8,10 @@ public class Czytelnik{
     private String data_urodzenia;
     private int wypozyczenia;
 
-    public Czytelnik(String imie, String nazwisko, long pesel, String data_urodzenia) {
+    public Czytelnik(int id_czytelnika, String imie, String nazwisko ){
+        this.id_czytelnika = id_czytelnika;
         this.imie = imie;
         this.nazwisko = nazwisko;
-        this.pesel = pesel;
-        this.data_urodzenia = data_urodzenia;
-        this.wypozyczenia = 0;
     }
 
     public String getImie() {
@@ -77,12 +75,9 @@ public class Czytelnik{
             return false;
         }
     }
-
-    public String aktualizuj_czytelnika(){
-        return "UPDATE czytelnicy SET imie = "+getImie()
-                +", nazwisko = "+getNazwisko()+", PESEL = "+ getPesel()
-                +", data_urodzenia = "+getData_urodzenia()+", wypozyczenia = "+getWypozyczenia()
-                +" WHERE id_czytelnika = "+getId_czytelnika()+";";
+    @Override
+    public String toString(){
+        return getImie()+" "+getNazwisko();
     }
 
 }

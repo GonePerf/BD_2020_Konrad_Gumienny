@@ -33,7 +33,7 @@ INSERT INTO czytelnicy VALUES (
 INSERT INTO czytelnicy VALUES (
    0010, 'Bartosz', 'Trybinski', 85120630712, '06-DEC-1985');
 
-
+update ksiazki set dostepnosc = 1 where id_ksiazki = 2;
 
 CREATE SEQUENCE czytelnicy_seq
 START WITH 11
@@ -164,10 +164,14 @@ COMMIT;
 CREATE TABLE zwroty(
 	id_zwrotu INT 
 		CONSTRAINT id_zwrotu_pk PRIMARY KEY,
-	id_wypozyczenia INT CONSTRAINT id_czyt_zwrot_fk REFERENCES czytelnicy(id_czytelnika,
+	id_wypozyczenia INT CONSTRAINT id_czyt_zwrot_fk REFERENCES wypozyczenia(id_wypozyczenia),
 	id_pracownika INT CONSTRAINT id_prac_zwrot_fk REFERENCES pracownicy(id_pracownika),
 	data_zwrotu DATE
 );
+
+CREATE SEQUENCE zwroty_seq
+START WITH 1
+INCREMENT BY 1;
 
 prompt Tables and sequences created and populated.
 set feedback on
