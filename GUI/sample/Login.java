@@ -42,12 +42,11 @@ public class Login {
                 Stage newWindow = new Stage();
                 newWindow.setTitle("Biblioteka");
                 newWindow.setScene(new Scene(root, 1200, 1000));
-                newWindow.setAlwaysOnTop(true);
                 Stage stage = (Stage) imie.getScene().getWindow();
                 stage.close();
                 newWindow.show();
             } else {
-                label.setText("Nieprawidłowe dane!!!");
+                label.setText("Nieprawidłowe dane");
             }
         }
         catch (SQLException e){

@@ -25,8 +25,8 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="dispose" minWidth="190.0" mnemonicParsing="false" text="Nie" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Button fx:id="zwroc" minWidth="190.0" mnemonicParsing="false" text="Tak" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button minWidth="190.0" mnemonicParsing="false" onAction="#dispose" text="Nie" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button minWidth="190.0" mnemonicParsing="false" onAction="#zwroc" text="Tak" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
          </children>
       </GridPane>
       <Label fx:id="label" alignment="CENTER" prefHeight="55.0" prefWidth="446.0" stylesheets="@styleGUI.css" text="Na pewno?">

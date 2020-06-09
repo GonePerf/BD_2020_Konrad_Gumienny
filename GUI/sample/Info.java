@@ -53,19 +53,28 @@ public class Info {
         while(resultSet.next()){
 
             Wypozyczenie wypozyczenie;
+            int id_wyp = resultSet.getInt(1);
             String tytul_ksiazki = resultSet.getString(2);
             String imieNazwisko = resultSet.getString(3) + " " + resultSet.getString(4);
             String data_wypozyczenia = resultSet.getString(5).substring(0,10);
-            String data_zwrotu = "-";
-//            ResultSet resultSet2 = statement.executeQuery("select data_zwrotu from zwroty where id_wypozyczenia = "+resultSet.getInt(1));
-//            while (resultSet2.next()) data_zwrotu = resultSet2.getDate(0).toString();
+            String data_zwrotu = getData_zwrotu(id_wyp);
+            //int id_ksiazki = resultSet.getInt(6);
+            //ResultSet resultSet2 = statement.executeQuery("select data_zwrotu from zwroty where id_wypozyczenia = "+resultSet.getInt(1));
+            //if(resultSet2.next()) data_zwrotu = resultSet2.getDate(0).toString();
 
-            wypozyczenie = new Wypozyczenie(resultSet.getInt(1), data_wypozyczenia, tytul_ksiazki, imieNazwisko,data_zwrotu,resultSet.getInt(6));
+            wypozyczenie = new Wypozyczenie(id_wyp, data_wypozyczenia, tytul_ksiazki, imieNazwisko,data_zwrotu,resultSet.getInt(6));
 
             //System.out.println(wypozyczenie.toString());
             listaWypozyczen.add(wypozyczenie);
         }
         tabela.setItems(listaWypozyczen);
+    }
+    public String getData_zwrotu(int id_wypozyczenia) throws SQLException {
+        Statement statement1 = statement = connection.createStatement();
+        String data_zwrotu = "-";
+        ResultSet resultSet2 = statement1.executeQuery("select data_zwrotu from zwroty where id_wypozyczenia = "+id_wypozyczenia);
+        if(resultSet2.next()) data_zwrotu = resultSet2.getDate(1).toString();
+        return data_zwrotu;
     }
     @FXML
     public void listaZwróconych() throws SQLException {
@@ -82,8 +91,8 @@ public class Info {
             String imieNazwisko = resultSet.getString(3) + " " + resultSet.getString(4);
             String data_wypozyczenia = resultSet.getString(5).substring(0,10);
             String data_zwrotu = "-";
-//            ResultSet resultSet2 = statement.executeQuery("select data_zwrotu from zwroty where id_wypozyczenia = "+resultSet.getInt(1));
-//            while (resultSet2.next()) data_zwrotu = resultSet2.getDate(0).toString();
+            ResultSet resultSet2 = statement.executeQuery("select data_zwrotu from zwroty where id_wypozyczenia = "+resultSet.getInt(1));
+            while (resultSet2.next()) data_zwrotu = resultSet2.getDate(0).toString();
             if(!data_zwrotu.equals("-")){
                 wypozyczenie = new Wypozyczenie(resultSet.getInt(1), data_wypozyczenia, tytul_ksiazki, imieNazwisko, data_zwrotu, resultSet.getInt(6));
 
@@ -108,8 +117,8 @@ public class Info {
             String imieNazwisko = resultSet.getString(3) + " " + resultSet.getString(4);
             String data_wypozyczenia = resultSet.getString(5).substring(0,10);
             String data_zwrotu = "-";
-//            ResultSet resultSet2 = statement.executeQuery("select data_zwrotu from zwroty where id_wypozyczenia = "+resultSet.getInt(1));
-//            while (resultSet2.next()) data_zwrotu = resultSet2.getDate(0).toString();
+            ResultSet resultSet2 = statement.executeQuery("select data_zwrotu from zwroty where id_wypozyczenia = "+resultSet.getInt(1));
+            while (resultSet2.next()) data_zwrotu = resultSet2.getDate(0).toString();
             if(data_zwrotu.equals("-")){
                 wypozyczenie = new Wypozyczenie(resultSet.getInt(1), data_wypozyczenia, tytul_ksiazki, imieNazwisko,data_zwrotu,resultSet.getInt(6));
 
@@ -127,11 +136,15 @@ public class Info {
         }
         else{
             if(tabela.getSelectionModel().getSelectedItem().getData_zwrotu().equals("-")){
-                ResultSet resultSet = statement.executeQuery("SELECT SUM_DAYS('"+tabela.getSelectionModel().getSelectedItem().getData_wypozyczenia()+"',SYSDATE) FROM dual");
+                //Wywołanie funkcji dla książki wypożyczonej, ale nie zwróconej do tej pory
+                ResultSet resultSet = statement.executeQuery("SELECT SUM_DAYS('"+
+                        tabela.getSelectionModel().getSelectedItem().getData_wypozyczenia()+"',SYSDATE) FROM dual");
                 if(resultSet.next()) odDnia.setText("Wypożyczona od: "+resultSet.getInt(1)+" dni");
             }
             else {
-                ResultSet resultSet = statement.executeQuery("SELECT SUM_DAYS('"+tabela.getSelectionModel().getSelectedItem().getData_wypozyczenia()+"','"+
+                //Wywołanie funkcji dla książki wcześniej oddanej
+                ResultSet resultSet = statement.executeQuery("SELECT SUM_DAYS('"+
+                        tabela.getSelectionModel().getSelectedItem().getData_wypozyczenia()+"','"+
                         tabela.getSelectionModel().getSelectedItem().getData_zwrotu()+"') FROM dual");
                 if(resultSet.next()) odDnia.setText("Wypożyczona przez: "+resultSet.getInt(1)+" dni");
             }

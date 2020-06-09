@@ -160,7 +160,7 @@ INSERT INTO wypozyczenia VALUES (
 );
 
 COMMIT;
-
+DROP TABLE zwroty CASCADE CONSTRAINTS;
 CREATE TABLE zwroty(
 	id_zwrotu INT 
 		CONSTRAINT id_zwrotu_pk PRIMARY KEY,

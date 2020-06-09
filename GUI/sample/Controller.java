@@ -104,7 +104,8 @@ public class Controller {
                 "select id_wypozyczenia, ksiazki.tytul, czytelnicy.imie, czytelnicy.nazwisko, data_wypozyczenia, ksiazki.id_ksiazki " +
                         "from wypozyczenia "+
                         "inner join ksiazki on wypozyczenia.id_ksiazki = ksiazki.id_ksiazki " +
-                        "inner join czytelnicy on wypozyczenia.id_czytelnika = czytelnicy.id_czytelnika");
+                        "inner join czytelnicy on wypozyczenia.id_czytelnika = czytelnicy.id_czytelnika" +
+                        " where ksiazki.dostepnosc = 0");
         while(resultSet.next()){
 
             Wypozyczenie wypozyczenie;

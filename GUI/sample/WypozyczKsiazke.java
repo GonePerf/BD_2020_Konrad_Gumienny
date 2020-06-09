@@ -1,6 +1,5 @@
 package sample;
 
-import Classes.Autor;
 import Classes.Czytelnik;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
