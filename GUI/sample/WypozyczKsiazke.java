@@ -1,10 +1,12 @@
 package sample;
 
 import Classes.Czytelnik;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.sql.*;
@@ -17,7 +19,8 @@ public class WypozyczKsiazke {
     private ObservableList<Czytelnik> listaCzytelnikow = FXCollections.observableArrayList();
     @FXML
     ComboBox<Czytelnik> czytelnicy;
-
+    @FXML
+    GridPane scene;
     @FXML
     public void initialize() throws SQLException {
         connection =

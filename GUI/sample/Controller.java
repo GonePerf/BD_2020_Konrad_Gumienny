@@ -101,28 +101,30 @@ public class Controller {
         tbl_view_dostepne.setItems(listaDostepnychKsiazek);
 
         resultSet = statement.executeQuery(
-                "select id_wypozyczenia, ksiazki.tytul, czytelnicy.imie, czytelnicy.nazwisko, data_wypozyczenia, ksiazki.id_ksiazki " +
+                "select ksiazki.id_ksiazki, id_wypozyczenia, ksiazki.tytul, czytelnicy.imie, czytelnicy.nazwisko, data_wypozyczenia  " +
                         "from wypozyczenia "+
                         "inner join ksiazki on wypozyczenia.id_ksiazki = ksiazki.id_ksiazki " +
                         "inner join czytelnicy on wypozyczenia.id_czytelnika = czytelnicy.id_czytelnika" +
-                        " where ksiazki.dostepnosc = 0");
+                        " where ksiazki.dostepnosc = 0 and id_wypozyczenia not in (SELECT id_wypozyczenia from zwroty)");
         while(resultSet.next()){
 
             Wypozyczenie wypozyczenie;
-            String tytul_ksiazki = resultSet.getString(2);
-            String imieNazwisko = resultSet.getString(3) + " " + resultSet.getString(4);
-            String data_wypozyczenia = resultSet.getString(5).substring(0,10);
+            String tytul_ksiazki = resultSet.getString(3);
+            String imieNazwisko = resultSet.getString(4) + " " + resultSet.getString(5);
+            String data_wypozyczenia = resultSet.getString(6).substring(0,10);
             String data_zwrotu = "-";
 //            ResultSet resultSet2 = statement.executeQuery("select data_zwrotu from zwroty where id_wypozyczenia = "+resultSet.getInt(1));
 //            while (resultSet2.next()) data_zwrotu = resultSet2.getDate(0).toString();
 
-                wypozyczenie = new Wypozyczenie(resultSet.getInt(1), data_wypozyczenia, tytul_ksiazki, imieNazwisko, data_zwrotu, resultSet.getInt(6));
+                wypozyczenie = new Wypozyczenie(resultSet.getInt(2), data_wypozyczenia, tytul_ksiazki, imieNazwisko, data_zwrotu, resultSet.getInt(1));
 
                 //System.out.println(wypozyczenie.toString());
                 listaNiedostepnychKsiazek.add(wypozyczenie);
 
         }
         tbl_view_niedostepne.setItems(listaNiedostepnychKsiazek);
+
+
     }
 
     @FXML
@@ -156,7 +158,7 @@ public class Controller {
                         "from wypozyczenia "+
                         "inner join ksiazki on wypozyczenia.id_ksiazki = ksiazki.id_ksiazki " +
                         "inner join czytelnicy on wypozyczenia.id_czytelnika = czytelnicy.id_czytelnika "+
-                        "where ksiazki.tytul like '" + szukaj_niedostepne.getText()+"%'");
+                        "where ksiazki.tytul like '" + szukaj_niedostepne.getText()+"%' and id_wypozyczenia not in (SELECT id_wypozyczenia from zwroty)");
         while(resultSet.next()){
 
             Wypozyczenie wypozyczenie;
@@ -183,6 +185,13 @@ public class Controller {
         newWindow.setTitle("Dodawanie książki");
         newWindow.setScene(new Scene(root));
         newWindow.setAlwaysOnTop(true);
+        newWindow.setOnHidden(e -> {
+            try {
+                listCreate();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         newWindow.show();
         if(!newWindow.isShowing()) listCreate();
 
@@ -194,6 +203,13 @@ public class Controller {
         newWindow.setTitle("Dodawanie czytelnika");
         newWindow.setScene(new Scene(root));
         newWindow.setAlwaysOnTop(true);
+        newWindow.setOnHidden(e -> {
+            try {
+                listCreate();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         newWindow.show();
     }
     @FXML
@@ -203,6 +219,13 @@ public class Controller {
         newWindow.setTitle("Dodawanie autora");
         newWindow.setScene(new Scene(root));
         newWindow.setAlwaysOnTop(true);
+        newWindow.setOnHidden(e -> {
+            try {
+                listCreate();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         newWindow.show();
     }
     @FXML
@@ -212,6 +235,13 @@ public class Controller {
         newWindow.setTitle("INFO");
         newWindow.setScene(new Scene(root));
         newWindow.setAlwaysOnTop(true);
+        newWindow.setOnHidden(e -> {
+            try {
+                listCreate();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         newWindow.show();
     }
 //    @FXML
@@ -226,17 +256,14 @@ public class Controller {
         newWindow.setTitle("Wypożyczanie");
         newWindow.setScene(new Scene(root));
         newWindow.setAlwaysOnTop(true);
-        newWindow.show();
-        newWindow.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                try {
-                    listCreate();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+        newWindow.setOnHidden(e -> {
+            try {
+                listCreate();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
             }
         });
+        newWindow.show();
     }
     @FXML
     public void zwroc() throws IOException {
@@ -247,6 +274,13 @@ public class Controller {
         newWindow.setTitle("Wypożyczanie");
         newWindow.setScene(new Scene(root));
         newWindow.setAlwaysOnTop(true);
+        newWindow.setOnHidden(e -> {
+            try {
+                listCreate();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         newWindow.show();
     }
 }

@@ -10,6 +10,11 @@ BEGIN
 	RETURN sumaDNI;
 END;
 
+CREATE OR REPLACE TYPE ksiazka
+AS OBJECT
+(   tytul VARCHAR(100),
+    ),
+
 
 CREATE OR REPLACE FUNCTION SUM_DAYS
 (data_wypozyczenia IN DATE)
